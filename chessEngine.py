@@ -131,6 +131,8 @@ class ChessEngine:
 
         if (inrow == row - onemove or inrow == row - twomove) and (incol == col) and (
                 board[inrow][incol][0] != self.mypiece):
+            if board[inrow][incol] != '--':
+                return print('you cant eat like that ')
             self.make_move(row, col, inrow, incol)
         else:
             return print('wrong move buddy')
@@ -141,7 +143,6 @@ class ChessEngine:
         col = int(name[2])
         inrow = int(name[4])
         incol = int(name[5])
-        print(self.mypiece)
         try:
             if self.board[row][col][1] != piece:
                 return print('wrong move buddy')

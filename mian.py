@@ -76,11 +76,10 @@ def main():
                     piece = engine.board[playerclick[0][0]][playerclick[0][1]]
                     val = piece[1]+str(playerclick[0][0])+str(playerclick[0][1])+" "+str(playerclick[1][0])+str(playerclick[1][1])
                     engine.control(val)
-                    print(val)
+                    # print(val)
                     playerclick = []
 
         draw(engine.board,playerclick)
-        # val = input("Enter your move: ")
 
     pygame.quit()
 
