@@ -1,7 +1,7 @@
 import copy
 
 
-class chessEngine():
+class ChessEngine:
     def __init__(self):
         self.board = [
             ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
@@ -288,6 +288,8 @@ class chessEngine():
                         elif piece[1] == 'Q':
                             if self.val_bishop(board, row, col, rowa, cola) or self.val_rock(board, row, col, rowa,
                                                                                              cola):
+                                if board[row][col][0] == board[rowa][cola][0]:
+                                    continue
                                 if not self.checkmate_short(row, col, rowa, cola, white):
                                     return False
 
@@ -364,6 +366,8 @@ class chessEngine():
                         elif piece[1] == 'Q':
                             if self.val_bishop(board, row, col, rowa, cola) or self.val_rock(board, row, col, rowa,
                                                                                              cola):
+                                if board[row][col][0] == board[rowa][cola][0]:
+                                    continue
                                 if board[row][col][0] is not board[rowa][cola][0]: self.wattacks.append(
                                     (rowa, cola))
 
