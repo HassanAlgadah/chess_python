@@ -105,7 +105,7 @@ class ChessEngine:
                 and (incol == col + 1 or incol == col - 1)) and (board[inrow][incol][0] != self.mypiece):
             self.make_move(row, col, inrow, incol)
         else:
-            return print('wrong move buddy')
+            return print('wrong move buddy222')
 
     def pawn(self, row, col, inrow, incol):
         board = self.board
@@ -122,7 +122,12 @@ class ChessEngine:
                     board[row - onemove][col - onemove] != '--' and incol == col - onemove):
                 return self.make_move(row, col, inrow, incol)
         except IndexError:
-            pass
+            if col == 7:
+                if board[row - onemove][col - onemove] != '--' and incol == col - onemove:
+                    return self.make_move(row, col, inrow, incol)
+            elif col == 0:
+                if board[row - onemove][col + onemove] != '--' and incol == col + onemove:
+                    return self.make_move(row, col, inrow, incol)
 
         if (inrow == row - onemove or inrow == row - twomove) and (incol == col) and (
                 board[inrow][incol][0] != self.mypiece):
@@ -136,9 +141,14 @@ class ChessEngine:
         col = int(name[2])
         inrow = int(name[4])
         incol = int(name[5])
+        print(self.mypiece)
         try:
             if self.board[row][col][1] != piece:
                 return print('wrong move buddy')
+            if self.board[inrow][incol][0] == self.mypiece:
+                return print('you cant eat your own pieces')
+            if self.board[row][col][0] != self.mypiece:
+                return print('this is not your turn')
 
             if piece == 'R':
                 self.rock(row, col, inrow, incol)
