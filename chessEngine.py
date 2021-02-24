@@ -107,6 +107,7 @@ class ChessEngine:
         else:
             return print('wrong move buddy222')
 
+    # pawn goes anyware if theres a piece in top left or top right
     def pawn(self, row, col, inrow, incol):
         board = self.board
         onemove = -1
@@ -118,8 +119,8 @@ class ChessEngine:
             twomove = 0
         # taking pieces diagonally
         try:
-            if (board[row - onemove][col + onemove] != '--' and incol == col + onemove) or (
-                    board[row - onemove][col - onemove] != '--' and incol == col - onemove):
+            if ((board[row - onemove][col + onemove] != '--' and incol == col + onemove) or (
+                    board[row - onemove][col - onemove] != '--' and incol == col - onemove)) and (row-onemove == inrow):
                 return self.make_move(row, col, inrow, incol)
         except IndexError:
             if col == 7:
@@ -274,6 +275,8 @@ class ChessEngine:
                 piece = board[row][col]
                 for rowa in range(8):
                     for cola in range(8):
+                        if board[rowa][cola][0] == board[row][col][0]:
+                            continue
                         if piece[0] == 'b' and white:
                             continue
                         elif piece[0] == 'w' and not white:
@@ -340,7 +343,7 @@ class ChessEngine:
         copybord[rowa][cola] = piece1
         self.allattacks(copybord, not white)
         # print('attacked: ', self.wattacks)
-        # print(rowa, cola, piece1)
+        print(rowa, cola, piece1)
         # print(copybord)
         self.check_for_checksv2(copybord)
         if not self.ischeck:
@@ -363,6 +366,8 @@ class ChessEngine:
                         elif board[row][col][0] == 'w' and not white:
                             continue
                         if row == rowa and col == cola:
+                            continue
+                        if board[rowa][cola][0] == board[row][col][0]:
                             continue
                         if piece[1] == 'R':
                             if self.val_rock(board, row, col, rowa, cola):

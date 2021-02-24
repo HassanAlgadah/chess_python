@@ -5,10 +5,10 @@ import random
 # engine = chessEngine.ChessEngine()
 
 # engine.control('P64 44')
-width, height = 800, 800
+width, height = 600, 600
 win = pygame.display.set_mode((width, height))
 IMAGES = {}
-SQ_SIZE = 800 // 8
+SQ_SIZE = 600 // 8
 
 
 def draw(board, playerclick):
@@ -17,16 +17,15 @@ def draw(board, playerclick):
     drawBoard()
     drawPieces(board)
 
-    if len(playerclick)>0:
+    if len(playerclick) > 0:
         s = pygame.Surface((SQ_SIZE, SQ_SIZE))  # the size of your rect
         s.set_alpha(128)  # alpha level
         s.fill(pygame.Color('red'))  # this fills the entire surface
-        win.blit(s, (playerclick[0][1] *SQ_SIZE,playerclick[0][0]*SQ_SIZE))
+        win.blit(s, (playerclick[0][1] * SQ_SIZE, playerclick[0][0] * SQ_SIZE))
     pygame.display.update()
 
 
 def drawBoard():
-
     colors = [pygame.Color('gray'), pygame.Color('dark green')]
     for r in range(8):
         for c in range(8):
@@ -45,7 +44,7 @@ def drawPieces(board):
 def loadImages():
     pieces = ['wP', 'wR', 'wN', 'wB', 'wK', 'wQ', 'bP', 'bR', 'bN', 'bB', 'bK', 'bQ']
     for piece in pieces:
-        IMAGES[piece] = pygame.transform.scale(pygame.image.load("chessPics/" + piece + ".png"), (800 // 8, 800 // 8))
+        IMAGES[piece] = pygame.transform.scale(pygame.image.load("chessPics/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
 
 def main():
@@ -66,7 +65,7 @@ def main():
                 location = pygame.mouse.get_pos()
                 col = location[0] // SQ_SIZE
                 row = location[1] // SQ_SIZE
-                if sqr == (row,col):
+                if sqr == (row, col):
                     sqr = ()
                     playerclick = []
                 else:
@@ -74,12 +73,13 @@ def main():
                     playerclick.append(sqr)
                 if len(playerclick) == 2:
                     piece = engine.board[playerclick[0][0]][playerclick[0][1]]
-                    val = piece[1]+str(playerclick[0][0])+str(playerclick[0][1])+" "+str(playerclick[1][0])+str(playerclick[1][1])
+                    val = piece[1] + str(playerclick[0][0]) + str(playerclick[0][1]) + " " + str(
+                        playerclick[1][0]) + str(playerclick[1][1])
                     engine.control(val)
                     # print(val)
                     playerclick = []
 
-        draw(engine.board,playerclick)
+        draw(engine.board, playerclick)
 
     pygame.quit()
 
