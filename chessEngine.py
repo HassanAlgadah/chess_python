@@ -17,9 +17,7 @@ class ChessEngine:
         self.white_turn = True
         self.mypiece = 'w'
         self.ischeck = False
-        self.checker = None
         self.wattacks = None
-        self.battacks = None
 
     def king(self, row, col, inrow, incol):
         board = self.board
@@ -49,14 +47,14 @@ class ChessEngine:
                     return print('theres no Rock')
         else:
             if (incol == 6 or incol == 2) and inrow == 0 and row == 0 and col == 4:
-                if board[0][7] == 'wR' or board[0][0] == 'bR':
+                if board[0][7] == 'bR' or board[0][0] == 'bR':
                     if incol == 6:
                         for sq in range(col + 1, incol + 1):
                             if board[0][sq] != '--':
                                 return print("you cant castle with a piece between")
                         self.make_move(row, col, inrow, incol)
                         board[0][7] = '--'
-                        board[0][5] = 'wR'
+                        board[0][5] = 'bR'
                         return
                     else:
                         for sq in range(1, col):
@@ -64,7 +62,7 @@ class ChessEngine:
                                 return print("you cant castle with a piece between")
                         self.make_move(row, col, inrow, incol)
                         board[0][0] = '--'
-                        board[0][3] = 'wR'
+                        board[0][3] = 'bR'
                         return
                 else:
                     return print('theres no Rock')
@@ -230,7 +228,7 @@ class ChessEngine:
 
     def make_move(self, row, col, inrow, incol):
         # check if the move is legal when the player is in check
-        if self.ischeck:
+        if self.ischeck or self.board[row][col][1] == 'K':
             copybord = copy.deepcopy(self.board)
             piece = copybord[row][col]
             copybord[row][col] = '--'
@@ -320,7 +318,7 @@ class ChessEngine:
                                 if (row + 1 == rowa and col + 1 == cola) or (
                                         row + 1 == rowa and col - 1 == cola):
                                     try:
-                                        if board[rowa + 1][cola + 1] != '--' and board[rowa + 1][cola - 1] != '--':
+                                        if board[rowa + 1][cola + 1] != '--' or board[rowa + 1][cola - 1] != '--':
                                             if not self.checkmate_short(row, col, rowa, cola, white):
                                                 return False
                                     except:
@@ -329,7 +327,7 @@ class ChessEngine:
                                 if (row - 1 == rowa and col + 1 == cola) or (
                                         row - 1 == rowa and col - 1 == cola):
                                     try:
-                                        if board[rowa - 1][cola - 1] != '--' and board[rowa - 1][cola + 1] != '--':
+                                        if board[rowa - 1][cola - 1] != '--' or board[rowa - 1][cola + 1] != '--':
                                             if not self.checkmate_short(row, col, rowa, cola, white):
                                                 return False
                                     except:
@@ -342,7 +340,7 @@ class ChessEngine:
         copybord[row][col] = '--'
         copybord[rowa][cola] = piece1
         self.allattacks(copybord, not white)
-        # print('attacked: ', self.wattacks)
+        print('attacked: ', self.wattacks)
         print(rowa, cola, piece1)
         # print(copybord)
         self.check_for_checksv2(copybord)
@@ -401,7 +399,7 @@ class ChessEngine:
                                         rowa + 1 == row and cola - 1 == col):
                                     if board[row][col][0] is not board[rowa][cola][0]:
                                         try:
-                                            if board[rowa+1][cola+1] != '--' and board[rowa+1][cola-1] != '--':
+                                            if board[rowa+1][cola+1] != '--' or board[rowa+1][cola-1] != '--':
                                                 self.wattacks.append((rowa, cola))
                                         except:
                                             pass
@@ -410,7 +408,7 @@ class ChessEngine:
                                         row - 1 == rowa and col - 1 == cola):
                                     if board[row][col][0] is not board[rowa][cola][0]:
                                         try:
-                                            if board[rowa-1][cola-1] != '--' and board[rowa-1][cola+1] != '--':
+                                            if board[rowa-1][cola-1] != '--' or board[rowa-1][cola+1] != '--':
                                                 self.wattacks.append((rowa, cola))
                                         except:
                                             pass
