@@ -13,6 +13,16 @@ class ChessEngine:
             ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
             ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']
         ]
+        # self.board = [
+        #     ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        #     ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
+        #     ['wQ', 'wQ', 'wQ', 'wQ', 'wK', 'wQ', 'wQ', 'wQ']
+        # ]
         self.moves = 0
         self.white_turn = True
         self.mypiece = 'w'
@@ -228,15 +238,15 @@ class ChessEngine:
 
     def make_move(self, row, col, inrow, incol):
         # check if the move is legal when the player is in check
-        if self.ischeck or self.board[row][col][1] == 'K':
-            copybord = copy.deepcopy(self.board)
-            piece = copybord[row][col]
-            copybord[row][col] = '--'
-            copybord[inrow][incol] = piece
-            self.allattacks(copybord, not self.white_turn)
-            self.check_for_checksv2(copybord)
-            if self.ischeck:
-                return print('you are in check you cant make this move stupid')
+        # if self.ischeck or self.board[row][col][1] == 'K' or self.board[row][col][1] == 'N':
+        copybord = copy.deepcopy(self.board)
+        piece = copybord[row][col]
+        copybord[row][col] = '--'
+        copybord[inrow][incol] = piece
+        self.allattacks(copybord, not self.white_turn)
+        self.check_for_checksv2(copybord)
+        if self.ischeck:
+            return print('you are in check you cant make this move stupid')
         # make the move
         self.moves += 1
         board = self.board

@@ -5,10 +5,10 @@ import random
 # engine = chessEngine.ChessEngine()
 
 # engine.control('P64 44')
-width, height = 600, 600
+width, height = 800, 800
 win = pygame.display.set_mode((width, height))
 IMAGES = {}
-SQ_SIZE = 600 // 8
+SQ_SIZE = 800 // 8
 
 
 def draw(board, playerclick):
@@ -26,7 +26,10 @@ def draw(board, playerclick):
 
 
 def drawBoard():
-    colors = [pygame.Color('gray'), pygame.Color('dark green')]
+    # pink bord
+    # colors = [(pygame.Color('light coral')),pygame.Color('indian red')]
+    # real board
+    colors = [(118,150,86), (238,238,210)]
     for r in range(8):
         for c in range(8):
             color = colors[((r + c) % 2)]
@@ -38,13 +41,13 @@ def drawPieces(board):
         for c in range(8):
             piece = board[r][c]
             if piece != '--':
-                win.blit(IMAGES[piece], pygame.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE))
+                win.blit(IMAGES[piece], pygame.Rect(c * SQ_SIZE+15, r * SQ_SIZE+9, SQ_SIZE, SQ_SIZE))
 
 
 def loadImages():
     pieces = ['wP', 'wR', 'wN', 'wB', 'wK', 'wQ', 'bP', 'bR', 'bN', 'bB', 'bK', 'bQ']
     for piece in pieces:
-        IMAGES[piece] = pygame.transform.scale(pygame.image.load("chessPics/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
+        IMAGES[piece] = pygame.transform.scale(pygame.image.load("chessPics/" + piece + ".png"), (70, 90))
 
 
 def main():
