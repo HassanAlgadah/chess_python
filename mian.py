@@ -41,13 +41,13 @@ def drawPieces(board):
         for c in range(8):
             piece = board[r][c]
             if piece != '--':
-                win.blit(IMAGES[piece], pygame.Rect(c * SQ_SIZE+15, r * SQ_SIZE+9, SQ_SIZE, SQ_SIZE))
+                win.blit(IMAGES[piece], pygame.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 
 def loadImages():
     pieces = ['wP', 'wR', 'wN', 'wB', 'wK', 'wQ', 'bP', 'bR', 'bN', 'bB', 'bK', 'bQ']
     for piece in pieces:
-        IMAGES[piece] = pygame.transform.scale(pygame.image.load("chessPics/" + piece + ".png"), (70, 90))
+        IMAGES[piece] = pygame.transform.scale(pygame.image.load("chessPics/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
 
 def main():
